@@ -8,10 +8,7 @@
 *)
 
 let rec at (k: int) (xs: 'a list): 'a option =
-    if k > List.length xs || k <= 0
-        then None
-    else match k, xs with
-        | _, [] -> None
-        | 0, x :: _ -> Some x
-        | k, _ :: xs -> at (k - 1) xs
-
+    match xs with
+    | x :: xs when k == 1 -> Some x
+    | []                  -> None
+    | _ :: xs             -> at (k - 1) xs
