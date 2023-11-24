@@ -6,8 +6,9 @@
 
 let rec compress (xs: 'a list): ('a list) =
     match xs with
-    | x :: y :: xs -> if x = y
-        then compress (x :: xs)
-        else x :: (compress (y :: xs))
+    | x :: (y :: _ as rest) ->
+            if x = y
+            then compress rest
+            else x :: (compress rest)
     | _ -> xs
 
