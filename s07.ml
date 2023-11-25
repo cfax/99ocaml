@@ -17,5 +17,13 @@ let rec flatten (xs: 'a node list): ('a node list) =
     | [] -> []
     | (One x) :: xs' -> (One x) :: flatten xs'
     | (Many []) :: xs' -> flatten xs' 
-    | (Many (x :: xs') :: rest) -> x :: flatten xs' @ flatten rest
+    | (Many (x :: xs') :: rest) -> x :: flatten (xs' @ rest)
 
+let flatten' (xs: 'a node list): ('a node list) =
+    let rec aux (xs: 'a node list) (acc: 'a node list): ('a node list) =
+        match xs with
+        | [] -> acc
+        | (One x) :: xs' -> aux xs' (acc @ [One x])
+        | (Many []) :: xs' -> aux xs' acc
+        | (Many x) :: xs' -> aux (x @ xs') acc
+    in aux xs []
